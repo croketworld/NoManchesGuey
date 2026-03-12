@@ -22,30 +22,49 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
+
         ListView1 = New ListView()
+        ColumnHeader1 = New ColumnHeader()
+        ColumnHeader2 = New ColumnHeader()
         Button1 = New Button()
         btn_AddItem = New Button()
         btn_RemoveItem = New Button()
         MenuStrip1 = New MenuStrip()
         StatusStrip1 = New StatusStrip()
         SplitContainer1 = New SplitContainer()
-        ColumnHeader1 = New ColumnHeader()
-        ColumnHeader2 = New ColumnHeader()
+        btn_DeactivateItem = New Button()
+        ToolTip1 = New ToolTip(components)
+        ListaProcesosBindingSource = New BindingSource(components)
         CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
         SplitContainer1.Panel1.SuspendLayout()
         SplitContainer1.Panel2.SuspendLayout()
         SplitContainer1.SuspendLayout()
+        CType(ListaProcesosBindingSource, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' ListView1
         ' 
         ListView1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         ListView1.Columns.AddRange(New ColumnHeader() {ColumnHeader1, ColumnHeader2})
+        ListView1.DataBindings.Add(New Binding("DataContext", ListaProcesosBindingSource, "Nombre", True))
+        ListView1.GridLines = True
         ListView1.Location = New Point(0, 3)
         ListView1.Name = "ListView1"
         ListView1.Size = New Size(691, 722)
         ListView1.TabIndex = 0
         ListView1.UseCompatibleStateImageBehavior = False
+        ListView1.View = View.Details
+        ' 
+        ' ColumnHeader1
+        ' 
+        ColumnHeader1.Text = "Nombre"
+        ColumnHeader1.Width = 560
+        ' 
+        ' ColumnHeader2
+        ' 
+        ColumnHeader2.Text = "Bloqueado"
+        ColumnHeader2.Width = 180
         ' 
         ' Button1
         ' 
@@ -64,16 +83,19 @@ Partial Class Form1
         btn_AddItem.Size = New Size(48, 48)
         btn_AddItem.TabIndex = 2
         btn_AddItem.Text = "+"
+        ToolTip1.SetToolTip(btn_AddItem, "Añadir un proceso a la lista de bloqueados")
         btn_AddItem.UseVisualStyleBackColor = True
         ' 
         ' btn_RemoveItem
         ' 
         btn_RemoveItem.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        btn_RemoveItem.Enabled = False
         btn_RemoveItem.Location = New Point(697, 57)
         btn_RemoveItem.Name = "btn_RemoveItem"
         btn_RemoveItem.Size = New Size(48, 48)
         btn_RemoveItem.TabIndex = 3
         btn_RemoveItem.Text = "-"
+        ToolTip1.SetToolTip(btn_RemoveItem, "Quitar un proceso de la lista de bloqueados")
         btn_RemoveItem.UseVisualStyleBackColor = True
         ' 
         ' MenuStrip1
@@ -102,6 +124,7 @@ Partial Class Form1
         ' 
         ' SplitContainer1.Panel1
         ' 
+        SplitContainer1.Panel1.Controls.Add(btn_DeactivateItem)
         SplitContainer1.Panel1.Controls.Add(ListView1)
         SplitContainer1.Panel1.Controls.Add(btn_AddItem)
         SplitContainer1.Panel1.Controls.Add(btn_RemoveItem)
@@ -113,13 +136,21 @@ Partial Class Form1
         SplitContainer1.SplitterDistance = 748
         SplitContainer1.TabIndex = 6
         ' 
-        ' ColumnHeader1
+        ' btn_DeactivateItem
         ' 
-        ColumnHeader1.Text = "Nombre"
+        btn_DeactivateItem.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        btn_DeactivateItem.Enabled = False
+        btn_DeactivateItem.Location = New Point(697, 131)
+        btn_DeactivateItem.Name = "btn_DeactivateItem"
+        btn_DeactivateItem.Size = New Size(48, 48)
+        btn_DeactivateItem.TabIndex = 4
+        btn_DeactivateItem.Text = "X"
+        ToolTip1.SetToolTip(btn_DeactivateItem, "Activa o desactiva el bloqueo de un proceso")
+        btn_DeactivateItem.UseVisualStyleBackColor = True
         ' 
-        ' ColumnHeader2
+        ' ListaProcesosBindingSource
         ' 
-        ColumnHeader2.Text = "Bloqueado"
+        ListaProcesosBindingSource.DataSource = GetType(ListaProcesos)
         ' 
         ' Form1
         ' 
@@ -136,6 +167,7 @@ Partial Class Form1
         SplitContainer1.Panel2.ResumeLayout(False)
         CType(SplitContainer1, ComponentModel.ISupportInitialize).EndInit()
         SplitContainer1.ResumeLayout(False)
+        CType(ListaProcesosBindingSource, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -149,5 +181,8 @@ Partial Class Form1
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents ColumnHeader1 As ColumnHeader
     Friend WithEvents ColumnHeader2 As ColumnHeader
+    Friend WithEvents btn_DeactivateItem As Button
+    Friend WithEvents ToolTip1 As ToolTip
+    Friend WithEvents ListaProcesosBindingSource As BindingSource
 
 End Class
